@@ -1,5 +1,6 @@
 package me.weekbelt.reservation.domain.reservationInfo;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.weekbelt.reservation.domain.BaseTimeEntity;
@@ -8,7 +9,7 @@ import org.hibernate.annotations.ColumnDefault;
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
-@Getter @NoArgsConstructor
+@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class ReservationInfo extends BaseTimeEntity {
 

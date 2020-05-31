@@ -1,5 +1,6 @@
 package me.weekbelt.reservation.domain.fileInfo;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.weekbelt.reservation.domain.BaseTimeEntity;
@@ -10,7 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
-@Getter @NoArgsConstructor
+@Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 public class FileInfo extends BaseTimeEntity {
 

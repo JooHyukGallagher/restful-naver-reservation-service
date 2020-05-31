@@ -2,6 +2,7 @@ package me.weekbelt.reservation.domain.displayInfo;
 
 import lombok.Getter;
 import me.weekbelt.reservation.domain.BaseTimeEntity;
+import me.weekbelt.reservation.domain.product.Product;
 
 import javax.persistence.*;
 
@@ -26,4 +27,8 @@ public class DisplayInfo extends BaseTimeEntity {
     private String homepage;
 
     private String email;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "product_id")
+    private Product product;
 }

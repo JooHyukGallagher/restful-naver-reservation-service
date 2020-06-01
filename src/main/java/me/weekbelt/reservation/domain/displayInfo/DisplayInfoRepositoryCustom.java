@@ -5,4 +5,6 @@ import org.springframework.data.domain.Pageable;
 
 public interface DisplayInfoRepositoryCustom {
     Page<DisplayInfo> findDisplayInfoPageByCategoryId(Long categoryId, Pageable pageable);
+
+    DisplayInfo findDisplayInfoById(Long displayInfoId);
 }

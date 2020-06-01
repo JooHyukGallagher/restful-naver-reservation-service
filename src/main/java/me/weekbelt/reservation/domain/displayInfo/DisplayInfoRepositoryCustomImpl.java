@@ -43,4 +43,14 @@ public class DisplayInfoRepositoryCustomImpl implements DisplayInfoRepositoryCus
         }
         return product.category.id.eq(categoryId);
     }
+
+    @Override
+    public DisplayInfo findDisplayInfoById(Long displayInfoId) {
+        return queryFactory
+                .selectFrom(displayInfo)
+                .join(displayInfo.product, product).fetchJoin()
+                .join(product.category, category).fetchJoin()
+                .where(displayInfo.id.eq(displayInfoId))
+                .fetchOne();
+    }
 }

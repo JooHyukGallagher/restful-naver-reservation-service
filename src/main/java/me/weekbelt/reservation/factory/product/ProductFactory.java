@@ -1,14 +1,9 @@
 package me.weekbelt.reservation.factory.product;
 
-import lombok.RequiredArgsConstructor;
 import me.weekbelt.reservation.domain.displayInfo.DisplayInfo;
 import me.weekbelt.reservation.web.form.product.ProductDto;
-import org.springframework.stereotype.Component;
 
-@RequiredArgsConstructor
-@Component
 public class ProductFactory {
-
 
     public static ProductDto displayInfoToProductDto(DisplayInfo displayInfo){
         return ProductDto.builder()

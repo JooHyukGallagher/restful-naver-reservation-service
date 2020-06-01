@@ -17,7 +17,6 @@ public class ReservationUserComment extends BaseTimeEntity {
     @Column(nullable = false)
     private Double score;
 
-    @Lob
     @Column(nullable = false)
     private String comment;
 }

@@ -21,7 +21,7 @@ public class ProductApiController {
     @GetMapping("/v1/displayinfos")
     public ProductResponse getProductResponse(Long categoryId,
                                               @PageableDefault(size = 4) Pageable pageable) {
-        Page<ProductDto> products = productService.findProductResponseByCategoryId(categoryId, pageable);
+        Page<ProductDto> products = productService.findProductDtoListByCategoryId(categoryId, pageable);
 
         return ProductResponse.builder()
                 .totalCount(products.getTotalElements())

@@ -21,7 +21,7 @@ public class ProductService {
     private final DisplayInfoRepository displayInfoRepository;
     private final ProductImageRepository productImageRepository;
 
-    public Page<ProductDto> findProductResponseByCategoryId(Long categoryId, Pageable pageable) {
+    public Page<ProductDto> findProductDtoListByCategoryId(Long categoryId, Pageable pageable) {
         Page<DisplayInfo> displayInfoPage = displayInfoRepository
                 .findDisplayInfoPageByCategoryId(categoryId, pageable);
 
@@ -33,5 +33,13 @@ public class ProductService {
             productDto.addFileId(productImages.get(0).getFileInfo().getId());
             return productDto;
         });
+    }
+
+    public ProductDto findProductDtoByDisplayInfoId(Long displayInfoId) {
+        DisplayInfo displayInfo = displayInfoRepository.findDisplayInfoById(displayInfoId);
+        ProductImage productImage = productImageRepository.findProductImageByProductIdAndType(displayInfo.getProduct().getId(), ImageType.ma).get(0);
+        ProductDto productDto = ProductFactory.displayInfoToProductDto(displayInfo);
+        productDto.addFileId(productImage.getFileInfo().getId());
+        return productDto;
     }
 }

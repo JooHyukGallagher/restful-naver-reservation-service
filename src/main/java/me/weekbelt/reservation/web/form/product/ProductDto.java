@@ -1,13 +1,11 @@
 package me.weekbelt.reservation.web.form.product;
 
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
-@Builder @NoArgsConstructor @AllArgsConstructor
+@Builder
 @Getter
 public class ProductDto {
     private Long id;
@@ -27,4 +25,8 @@ public class ProductDto {
     private LocalDateTime createDate;
     private LocalDateTime modifyDate;
     private Long fileId;
+
+    public void addFileId(Long fileId) {
+        this.fileId = fileId;
+    }
 }

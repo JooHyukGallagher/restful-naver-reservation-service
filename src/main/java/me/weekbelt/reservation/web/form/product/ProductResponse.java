@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.springframework.data.domain.Page;
 
 import java.util.List;
 
@@ -11,9 +12,10 @@ import java.util.List;
 @Getter
 public class ProductResponse {
 
-    private Integer totalCount;
+    private Long totalCount;
 
     private Integer productCount;
 
-    private List<ProductDto> products;
+    private Page<ProductDto> products;
+
 }

@@ -37,12 +37,6 @@ public class DisplayInfoRepositoryCustomImpl implements DisplayInfoRepositoryCus
         return new PageImpl<>(content, pageable, total);
     }
 
-    private BooleanExpression categoryIdEq(Long categoryId) {
-        if (categoryId == null || categoryId == 0) {
-            return null;
-        }
-        return product.category.id.eq(categoryId);
-    }
 
     @Override
     public DisplayInfo findDisplayInfoById(Long displayInfoId) {
@@ -52,5 +46,12 @@ public class DisplayInfoRepositoryCustomImpl implements DisplayInfoRepositoryCus
                 .join(product.category, category).fetchJoin()
                 .where(displayInfo.id.eq(displayInfoId))
                 .fetchOne();
+    }
+
+    private BooleanExpression categoryIdEq(Long categoryId) {
+        if (categoryId == null || categoryId == 0) {
+            return null;
+        }
+        return product.category.id.eq(categoryId);
     }
 }

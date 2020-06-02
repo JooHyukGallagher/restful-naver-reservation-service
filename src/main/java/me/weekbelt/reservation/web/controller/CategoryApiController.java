@@ -22,9 +22,14 @@ public class CategoryApiController {
         List<CategoryDto> categoryDtoList = categoryRepository.findCategoryDtoList();
         int size = categoryDtoList.size();
 
+        return makeCategoryResponse(categoryDtoList, size);
+    }
+
+    private CategoryResponse makeCategoryResponse(List<CategoryDto> categoryDtoList, int size) {
         return CategoryResponse.builder()
                 .items(categoryDtoList)
                 .size(size)
                 .build();
     }
+
 }

@@ -20,6 +20,10 @@ public class PromotionApiController {
     @GetMapping("/v1/promotions")
     public PromotionResponse promotions() {
         List<PromotionDto> promotions = promotionRepository.findPromotions();
+        return makePromotionResponse(promotions);
+    }
+
+    private PromotionResponse makePromotionResponse(List<PromotionDto> promotions) {
         return PromotionResponse.builder()
                 .size(promotions.size())
                 .items(promotions)

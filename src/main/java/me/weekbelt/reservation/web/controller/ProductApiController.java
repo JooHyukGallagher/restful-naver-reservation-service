@@ -23,6 +23,10 @@ public class ProductApiController {
                                               @PageableDefault(size = 4) Pageable pageable) {
         Page<ProductDto> products = productService.findProductDtoListByCategoryId(categoryId, pageable);
 
+        return makeProductResponse(products);
+    }
+
+    private ProductResponse makeProductResponse(Page<ProductDto> products) {
         return ProductResponse.builder()
                 .totalCount(products.getTotalElements())
                 .productCount(products.getNumberOfElements())

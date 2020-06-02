@@ -1,9 +1,17 @@
 package me.weekbelt.reservation.domain.reservationUserComment;
 
+import com.querydsl.core.QueryResults;
+import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
+import static me.weekbelt.reservation.domain.reservationInfo.QReservationInfo.reservationInfo;
 import static me.weekbelt.reservation.domain.reservationUserComment.QReservationUserComment.reservationUserComment;
 
 @RequiredArgsConstructor
@@ -17,7 +25,29 @@ public class ReservationUserCommentRepositoryCustomImpl implements ReservationUs
         return queryFactory
                 .select(reservationUserComment.score.avg())
                 .from(reservationUserComment)
-                .where(reservationUserComment.product.id.eq(productId))
+                .where(productIdEq(productId))
                 .fetchOne();
+    }
+
+    @Override
+    public Page<ReservationUserComment> findReservationUserCommentsByProductId(Long productId, Pageable pageable) {
+        QueryResults<ReservationUserComment> results = queryFactory
+                .selectFrom(reservationUserComment)
+                .join(reservationUserComment.reservationInfo, reservationInfo).fetchJoin()
+                .where(productIdEq(productId))
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .fetchResults();
+
+        List<ReservationUserComment> content = results.getResults();
+        long total = results.getTotal();
+        return new PageImpl<>(content, pageable, total);
+    }
+
+    private BooleanExpression productIdEq(Long productId) {
+        if (productId == null || productId == 0){
+            return null;
+        }
+        return reservationUserComment.product.id.eq(productId);
     }
 }

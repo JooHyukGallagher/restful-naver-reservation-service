@@ -40,6 +40,10 @@ public class DisplayInfoApiController {
         List<DisplayInfoImageDto> displayInfoImages = displayInfoImageService
                 .findDisplayInfoImageDtoByDisplayInfoId(displayInfoId);
 
+        return makeDisplayInfoResponse(product, productImages, displayInfoImages);
+    }
+
+    private DisplayInfoResponse makeDisplayInfoResponse(ProductDto product, List<ProductImageDto> productImages, List<DisplayInfoImageDto> displayInfoImages) {
         return DisplayInfoResponse.builder()
                 .product(product)
                 .productImages(productImages)

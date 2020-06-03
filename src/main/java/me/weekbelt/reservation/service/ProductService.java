@@ -6,6 +6,7 @@ import me.weekbelt.reservation.domain.displayInfo.DisplayInfo;
 import me.weekbelt.reservation.domain.displayInfo.DisplayInfoRepository;
 import me.weekbelt.reservation.domain.productImage.ProductImage;
 import me.weekbelt.reservation.domain.productImage.ProductImageRepository;
+import me.weekbelt.reservation.factory.displayInfo.DisplayInfoFactory;
 import me.weekbelt.reservation.factory.product.ProductFactory;
 import me.weekbelt.reservation.web.form.product.ProductDto;
 import org.springframework.data.domain.Page;
@@ -24,15 +25,7 @@ public class ProductService {
     public Page<ProductDto> findProductDtoListByCategoryId(Long categoryId, Pageable pageable) {
         Page<DisplayInfo> displayInfoPage = displayInfoRepository
                 .findDisplayInfoPageByCategoryId(categoryId, pageable);
-
-        return displayInfoPage.map(displayInfo -> {
-            List<ProductImage> productImages = productImageRepository
-                    .findProductImageByProductIdAndType(displayInfo.getProduct().getId(), ImageType.th);
-
-            ProductDto productDto = ProductFactory.displayInfoToProductDto(displayInfo);
-            productDto.addFileId(productImages.get(0).getFileInfo().getId());
-            return productDto;
-        });
+        return displayInfoPage.map(DisplayInfoFactory::displayInfoToProductDto);
     }
 
     public ProductDto findProductDtoByDisplayInfoId(Long displayInfoId) {

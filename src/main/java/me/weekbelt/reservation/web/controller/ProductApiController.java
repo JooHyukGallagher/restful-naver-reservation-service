@@ -1,6 +1,7 @@
 package me.weekbelt.reservation.web.controller;
 
 import lombok.RequiredArgsConstructor;
+import me.weekbelt.reservation.factory.product.ProductFactory;
 import me.weekbelt.reservation.service.ProductService;
 import me.weekbelt.reservation.web.form.product.ProductDto;
 import me.weekbelt.reservation.web.form.product.ProductResponse;
@@ -22,15 +23,6 @@ public class ProductApiController {
     public ProductResponse getProductResponse(Long categoryId,
                                               @PageableDefault(size = 4) Pageable pageable) {
         Page<ProductDto> products = productService.findProductDtoListByCategoryId(categoryId, pageable);
-
-        return makeProductResponse(products);
-    }
-
-    private ProductResponse makeProductResponse(Page<ProductDto> products) {
-        return ProductResponse.builder()
-                .totalCount(products.getTotalElements())
-                .productCount(products.getNumberOfElements())
-                .products(products)
-                .build();
+        return ProductFactory.makeProductResponse(products);
     }
 }

@@ -2,6 +2,8 @@ package me.weekbelt.reservation.factory.product;
 
 import me.weekbelt.reservation.domain.displayInfo.DisplayInfo;
 import me.weekbelt.reservation.web.form.product.ProductDto;
+import me.weekbelt.reservation.web.form.product.ProductResponse;
+import org.springframework.data.domain.Page;
 
 public class ProductFactory {
 
@@ -23,6 +25,14 @@ public class ProductFactory {
                 .email(displayInfo.getEmail())
                 .createDate(displayInfo.getCreateDate())
                 .modifyDate(displayInfo.getModifyDate())
+                .build();
+    }
+
+    public static ProductResponse makeProductResponse(Page<ProductDto> products) {
+        return ProductResponse.builder()
+                .totalCount(products.getTotalElements())
+                .productCount(products.getNumberOfElements())
+                .products(products)
                 .build();
     }
 }

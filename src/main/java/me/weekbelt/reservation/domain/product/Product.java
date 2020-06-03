@@ -5,8 +5,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import me.weekbelt.reservation.domain.BaseTimeEntity;
 import me.weekbelt.reservation.domain.category.Category;
+import me.weekbelt.reservation.domain.productImage.ProductImage;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -25,4 +28,7 @@ public class Product extends BaseTimeEntity {
     private String content;
 
     private String event;
+
+    @OneToMany(mappedBy = "product")
+    private List<ProductImage> productImages = new ArrayList<>();
 }

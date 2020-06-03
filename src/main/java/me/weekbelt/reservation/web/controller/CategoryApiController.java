@@ -30,11 +30,12 @@ public class CategoryApiController {
         List<CategoryDto> categoryDtoList = categoryRepository.findCategoryDtoList();
         return CategoryFactory.makeCategoryResponse(categoryDtoList);
     }
-//
-//    @GetMapping(value = "/v2/categories", produces = MediaTypes.HAL_JSON_VALUE)
+
+//    @GetMapping("/v2/categories")
 //    public ResponseEntity<CategoryResponse> getCategoryResponseV2(){
 //        List<CategoryDto> categoryDtoList = categoryRepository.findCategoryDtoList();
 //        CategoryResponse categoryResponse = CategoryFactory.makeCategoryResponse(categoryDtoList);
+//
 //
 //        URI uri = linkTo(methodOn(CategoryApiController.class).getCategoryResponseV2()).toUri();
 //        return ResponseEntity.;

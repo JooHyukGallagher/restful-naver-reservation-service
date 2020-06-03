@@ -26,8 +26,8 @@ public class CategoryRepositoryCustomImpl implements CategoryRepositoryCustom {
                         category.name,
                         category.name.count().intValue().as("count")))
                 .from(category)
-                .join(product).on(category.id.eq(product.category.id)).fetchJoin()
-                .join(displayInfo).on(product.id.eq(displayInfo.product.id)).fetchJoin()
+                .join(product).on(category.id.eq(product.category.id))
+                .join(displayInfo).on(product.id.eq(displayInfo.product.id))
                 .groupBy(category.name)
                 .orderBy(category.id.asc())
                 .fetch();

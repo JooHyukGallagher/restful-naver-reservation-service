@@ -2,6 +2,7 @@ package me.weekbelt.reservation.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.reservation.domain.category.CategoryRepository;
+import me.weekbelt.reservation.factory.category.CategoryFactory;
 import me.weekbelt.reservation.web.form.category.CategoryDto;
 import me.weekbelt.reservation.web.form.category.CategoryResponse;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,16 +21,7 @@ public class CategoryApiController {
     @GetMapping("/v1/categories")
     public CategoryResponse getCategoryResponse(){
         List<CategoryDto> categoryDtoList = categoryRepository.findCategoryDtoList();
-        int size = categoryDtoList.size();
-
-        return makeCategoryResponse(categoryDtoList, size);
-    }
-
-    private CategoryResponse makeCategoryResponse(List<CategoryDto> categoryDtoList, int size) {
-        return CategoryResponse.builder()
-                .items(categoryDtoList)
-                .size(size)
-                .build();
+        return CategoryFactory.makeCategoryResponse(categoryDtoList);
     }
 
 }

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.springframework.restdocs.mockmvc.MockMvcRestDocumentation.document;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -30,6 +30,7 @@ class ProductApiControllerTest extends BasicControllerTest {
                 .andExpect(jsonPath("_embedded.productDtoList[0]._links.self").exists())
                 .andExpect(jsonPath("_links.self").exists())
 //                .andExpect(jsonPath("_embedded._links.profile").exists())
+        .andDo(document("product-list"))
         ;
     }
 

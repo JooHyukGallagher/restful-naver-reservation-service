@@ -26,6 +26,9 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     // querydsl
     implementation 'com.querydsl:querydsl-jpa'
+    // https://mvnrepository.com/artifact/org.springframework.restdocs/spring-restdocs-mockmvc
+    testCompile group: 'org.springframework.restdocs', name: 'spring-restdocs-mockmvc', version: '2.0.4.RELEASE'
+
 
     compileOnly 'org.projectlombok:lombok'
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
@@ -40,7 +43,6 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-
 
 //querydsl 추가 시작
 def querydslDir = "$buildDir/generated/querydsl"

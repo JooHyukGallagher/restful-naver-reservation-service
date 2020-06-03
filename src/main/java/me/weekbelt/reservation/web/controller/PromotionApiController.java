@@ -2,6 +2,7 @@ package me.weekbelt.reservation.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.reservation.domain.promotion.PromotionRepository;
+import me.weekbelt.reservation.factory.promotion.PromotionFactory;
 import me.weekbelt.reservation.web.form.promotion.PromotionDto;
 import me.weekbelt.reservation.web.form.promotion.PromotionResponse;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -20,13 +21,6 @@ public class PromotionApiController {
     @GetMapping("/v1/promotions")
     public PromotionResponse promotions() {
         List<PromotionDto> promotions = promotionRepository.findPromotions();
-        return makePromotionResponse(promotions);
-    }
-
-    private PromotionResponse makePromotionResponse(List<PromotionDto> promotions) {
-        return PromotionResponse.builder()
-                .size(promotions.size())
-                .items(promotions)
-                .build();
+        return PromotionFactory.makePromotionResponse(promotions);
     }
 }

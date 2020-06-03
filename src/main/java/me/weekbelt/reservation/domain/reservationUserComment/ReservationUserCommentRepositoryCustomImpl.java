@@ -4,6 +4,7 @@ import com.querydsl.core.QueryResults;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
+import me.weekbelt.reservation.domain.product.QProduct;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -11,6 +12,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static me.weekbelt.reservation.domain.product.QProduct.*;
 import static me.weekbelt.reservation.domain.reservationInfo.QReservationInfo.reservationInfo;
 import static me.weekbelt.reservation.domain.reservationUserComment.QReservationUserComment.reservationUserComment;
 
@@ -34,9 +36,11 @@ public class ReservationUserCommentRepositoryCustomImpl implements ReservationUs
         QueryResults<ReservationUserComment> results = queryFactory
                 .selectFrom(reservationUserComment)
                 .join(reservationUserComment.reservationInfo, reservationInfo).fetchJoin()
+                .join(reservationUserComment.product, product).fetchJoin()
                 .where(productIdEq(productId))
                 .limit(pageable.getPageSize())
                 .offset(pageable.getOffset())
+                .orderBy(reservationUserComment.id.desc())
                 .fetchResults();
 
         List<ReservationUserComment> content = results.getResults();

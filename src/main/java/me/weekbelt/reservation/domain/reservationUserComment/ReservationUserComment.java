@@ -6,8 +6,11 @@ import lombok.NoArgsConstructor;
 import me.weekbelt.reservation.domain.BaseTimeEntity;
 import me.weekbelt.reservation.domain.product.Product;
 import me.weekbelt.reservation.domain.reservationInfo.ReservationInfo;
+import me.weekbelt.reservation.domain.reservationUserCommentImage.ReservationUserCommentImage;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
@@ -29,4 +32,7 @@ public class ReservationUserComment extends BaseTimeEntity {
 
     @Column(nullable = false)
     private String comment;
+
+    @OneToMany(mappedBy = "reservationUserComment")
+    private List<ReservationUserCommentImage> reservationUserCommentImages = new ArrayList<>();
 }

@@ -32,7 +32,7 @@ public class DisplayInfoApiController {
     private final ProductPriceService productPriceService;
     private final ReservationUserCommentRepository reservationUserCommentRepository;
 
-    @GetMapping("/v1/displayInfos/{displayInfoId}")
+    @GetMapping("/v1/displayinfos/{displayInfoId}")
     public DisplayInfoResponse displayInfo(@PathVariable Long displayInfoId){
         ProductDto product = productService.findProductDtoByDisplayInfoId(displayInfoId);
         List<ProductImageDto> productImages = productImageService

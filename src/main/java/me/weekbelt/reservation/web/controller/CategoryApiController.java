@@ -5,14 +5,13 @@ import me.weekbelt.reservation.domain.category.CategoryRepository;
 import me.weekbelt.reservation.factory.category.CategoryFactory;
 import me.weekbelt.reservation.web.form.category.CategoryDto;
 import me.weekbelt.reservation.web.form.category.CategoryResponse;
-import org.springframework.hateoas.MediaTypes;
-import org.springframework.http.MediaType;
+import me.weekbelt.reservation.web.form.category.CategoryResponseModel;
+import org.springframework.hateoas.CollectionModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.net.URI;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
@@ -31,14 +30,13 @@ public class CategoryApiController {
         return CategoryFactory.makeCategoryResponse(categoryDtoList);
     }
 
-//    @GetMapping("/v2/categories")
-//    public ResponseEntity<CategoryResponse> getCategoryResponseV2(){
-//        List<CategoryDto> categoryDtoList = categoryRepository.findCategoryDtoList();
-//        CategoryResponse categoryResponse = CategoryFactory.makeCategoryResponse(categoryDtoList);
-//
-//
-//        URI uri = linkTo(methodOn(CategoryApiController.class).getCategoryResponseV2()).toUri();
-//        return ResponseEntity.;
-//    }
+    @GetMapping("/v2/categories")
+    public ResponseEntity<?> getCategoryResponseV2(){
+        List<CategoryDto> categoryDtoList = categoryRepository.findCategoryDtoList();
+        CollectionModel<CategoryDto> categoryModels = CategoryResponseModel
+                .of(categoryDtoList, linkTo(methodOn(CategoryApiController.class).getCategoryResponseV2()).withSelfRel());
+        // TODO: CategoryDto profile문서 링크 추가
+        return ResponseEntity.ok(categoryModels);
+    }
 
 }

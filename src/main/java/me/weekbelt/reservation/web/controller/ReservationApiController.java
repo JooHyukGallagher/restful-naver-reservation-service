@@ -3,7 +3,6 @@ package me.weekbelt.reservation.web.controller;
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.reservation.service.ReservationUserCommentService;
 import me.weekbelt.reservation.web.form.reservationUserComment.ReservationUserCommentDto;
-import me.weekbelt.reservation.web.form.reservationUserComment.ReservationUserCommentResponse;
 import me.weekbelt.reservation.web.form.reservationUserComment.ReservationUserCommentResponseModel;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

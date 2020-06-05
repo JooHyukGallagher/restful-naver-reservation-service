@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,8 @@ public class ProductApiController {
         PagedModel<EntityModel<ProductDto>> pagedModels = assembler
                 .toModel(products, productDto -> ProductResponseModel.of(productDto,
                         linkTo(ProductApiController.class).slash(productDto.getId()).withSelfRel()));
+        pagedModels.add(Link.of("/docs/index.html#resources-product-list").withRel("profile"));
+
         return ResponseEntity.ok(pagedModels);
     }
 }

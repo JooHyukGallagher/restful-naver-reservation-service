@@ -26,20 +26,20 @@ class CategoryApiControllerTest extends BasicControllerTest {
                 .andExpect(jsonPath("size").exists())
                 .andExpect(jsonPath("items").exists());
     }
-
-    @DisplayName("카테고리 목록 조회")
-    @Test
-    public void categoriesV2() throws Exception {
-        String requestUri = "/api/v2/categories";
-        mockMvc.perform(get(requestUri))
-                .andDo(print())
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("size").exists())
-                .andExpect(jsonPath("items").exists())
-        .andExpect(header().exists(HttpHeaders.LOCATION))
-        .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE))
-        .andExpect(jsonPath("_link.self").exists())
-//        .andExpect(jsonPath("_link.profile").exists()) TODO: 나중에
-        ;
-    }
+//
+//    @DisplayName("카테고리 목록 조회")
+//    @Test
+//    public void categoriesV2() throws Exception {
+//        String requestUri = "/api/v2/categories";
+//        mockMvc.perform(get(requestUri))
+//                .andDo(print())
+//                .andExpect(status().isOk())
+//                .andExpect(jsonPath("size").exists())
+//                .andExpect(jsonPath("items").exists())
+//        .andExpect(header().exists(HttpHeaders.LOCATION))
+//        .andExpect(header().string(HttpHeaders.CONTENT_TYPE, MediaTypes.HAL_JSON_VALUE))
+//        .andExpect(jsonPath("_link.self").exists())
+////        .andExpect(jsonPath("_link.profile").exists()) TODO: 나중에
+//        ;
+//    }
 }

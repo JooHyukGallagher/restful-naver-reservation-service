@@ -18,7 +18,6 @@ import static org.springframework.restdocs.request.RequestDocumentation.paramete
 import static org.springframework.restdocs.request.RequestDocumentation.requestParameters;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 class ProductApiControllerTest extends BasicControllerTest {
@@ -58,16 +57,14 @@ class ProductApiControllerTest extends BasicControllerTest {
                 .param("size", "4"))
                 .andDo(print())
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("page").exists())
-                .andExpect(jsonPath("_embedded.productDtoList[0]._links.self").exists())
-                .andExpect(jsonPath("_links.self").exists())
                 .andDo(document("product-list",
                         links(
                                 linkWithRel("self").description("현재 페이지 전시상품 목록"),
                                 linkWithRel("first").description("첫 번째 페이지 전시상품 목록"),
                                 linkWithRel("prev").description("이전 페이지 전시상품 목록"),
                                 linkWithRel("next").description("다음 페이지 전시상품 목록"),
-                                linkWithRel("last").description("마지막 페이지 전시상품 목록")
+                                linkWithRel("last").description("마지막 페이지 전시상품 목록"),
+                                linkWithRel("profile").description("해당 API 문서")
                         ),
                         requestParameters(
                                 parameterWithName("categoryId").description("카테고리 아이디"),
@@ -84,13 +81,13 @@ class ProductApiControllerTest extends BasicControllerTest {
                                 fieldWithPath("_links.self.href").description("현재 페이지 전시상품 목록"),
                                 fieldWithPath("_links.next.href").description("다음 페이지 전시상품 목록"),
                                 fieldWithPath("_links.last.href").description("마지막 페이지 전시상품 목록"),
+                                fieldWithPath("_links.profile.href").description("해당 API 문서"),
                                 fieldWithPath("page.size").description("한 페이지의 전시상품 목록 개수"),
                                 fieldWithPath("page.totalElements").description("해당 카테고리의 전체 전시상품 목록 개수"),
                                 fieldWithPath("page.totalPages").description("해당 카테고리의 상품목록 페이지 수"),
                                 fieldWithPath("page.number").description("현재 페이지(0부터 시작)")
                         ).andWithPrefix("_embedded.productDtoList[].", productList)
-                ))
-        ;
+                ));
     }
 
 }

@@ -30,10 +30,10 @@ class ProductApiControllerTest extends BasicControllerTest {
     public void getProducts() throws Exception {
 
         FieldDescriptor[] productList = new FieldDescriptor[]{
-                fieldWithPath("id").description("상품 아이디"),
+                fieldWithPath("id").description("상품 식별 아이디"),
                 fieldWithPath("categoryId").description("카테고리 아이디"),
                 fieldWithPath("displayInfoId").description("해당 상품의 전시 정보 아이디"),
-                fieldWithPath("name").description("카테고리 명칭"),
+                fieldWithPath("name").description("카테고리 명"),
                 fieldWithPath("description").description("상품 짧은 설명"),
                 fieldWithPath("content").description("상품 상세 설명"),
                 fieldWithPath("event").description("해당 상품의 이벤트"),
@@ -64,7 +64,7 @@ class ProductApiControllerTest extends BasicControllerTest {
                                 linkWithRel("prev").description("이전 페이지 전시상품 목록"),
                                 linkWithRel("next").description("다음 페이지 전시상품 목록"),
                                 linkWithRel("last").description("마지막 페이지 전시상품 목록"),
-                                linkWithRel("profile").description("해당 API 문서")
+                                linkWithRel("profile").description("상품 목록 API 문서")
                         ),
                         requestParameters(
                                 parameterWithName("categoryId").description("카테고리 아이디"),
@@ -81,13 +81,12 @@ class ProductApiControllerTest extends BasicControllerTest {
                                 fieldWithPath("_links.self.href").description("현재 페이지 전시상품 목록"),
                                 fieldWithPath("_links.next.href").description("다음 페이지 전시상품 목록"),
                                 fieldWithPath("_links.last.href").description("마지막 페이지 전시상품 목록"),
-                                fieldWithPath("_links.profile.href").description("해당 API 문서"),
+                                fieldWithPath("_links.profile.href").description("상품 목록 API 문서"),
                                 fieldWithPath("page.size").description("한 페이지의 전시상품 목록 개수"),
                                 fieldWithPath("page.totalElements").description("해당 카테고리의 전체 전시상품 목록 개수"),
                                 fieldWithPath("page.totalPages").description("해당 카테고리의 상품목록 페이지 수"),
                                 fieldWithPath("page.number").description("현재 페이지(0부터 시작)")
-                        ).andWithPrefix("_embedded.productDtoList[].", productList)
-                ));
+                        ).andWithPrefix("_embedded.productDtoList[].", productList)));
     }
 
 }

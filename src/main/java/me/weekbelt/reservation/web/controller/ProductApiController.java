@@ -26,14 +26,18 @@ public class ProductApiController {
     private final ProductService productService;
 
     @GetMapping("/v1/displayinfos")
-    public ResponseEntity<?> getProductResponseV2(Long categoryId, @PageableDefault(size = 4) Pageable pageable,
+    public ResponseEntity<?> getProductResponseV1(Long categoryId, @PageableDefault(size = 4) Pageable pageable,
                                                   PagedResourcesAssembler<ProductDto> assembler) {
         Page<ProductDto> products = productService.findProductDtoListByCategoryId(categoryId, pageable);
+        PagedModel<EntityModel<ProductDto>> pagedModels = makeProductPageModel(assembler, products);
+        return ResponseEntity.ok(pagedModels);
+    }
+
+    private PagedModel<EntityModel<ProductDto>> makeProductPageModel(PagedResourcesAssembler<ProductDto> assembler, Page<ProductDto> products) {
         PagedModel<EntityModel<ProductDto>> pagedModels = assembler
                 .toModel(products, productDto -> ProductResponseModel.of(productDto,
                         linkTo(ProductApiController.class).slash(productDto.getId()).withSelfRel()));
         pagedModels.add(Link.of("/docs/index.html#resources-product-list").withRel("profile"));
-
-        return ResponseEntity.ok(pagedModels);
+        return pagedModels;
     }
 }

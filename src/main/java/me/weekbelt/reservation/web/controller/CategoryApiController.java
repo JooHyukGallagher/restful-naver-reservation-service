@@ -2,11 +2,9 @@ package me.weekbelt.reservation.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.reservation.domain.category.CategoryRepository;
-import me.weekbelt.reservation.factory.category.CategoryFactory;
 import me.weekbelt.reservation.web.form.category.CategoryDto;
-import me.weekbelt.reservation.web.form.category.CategoryResponse;
-import me.weekbelt.reservation.web.form.category.CategoryResponseModel;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +13,6 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.List;
 
 import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.methodOn;
 
 @RequiredArgsConstructor
 @RestController
@@ -25,18 +22,21 @@ public class CategoryApiController {
     private final CategoryRepository categoryRepository;
 
     @GetMapping("/v1/categories")
-    public CategoryResponse getCategoryResponseV1(){
+    public ResponseEntity<?> getCategoryResponseV1() {
         List<CategoryDto> categoryDtoList = categoryRepository.findCategoryDtoList();
-        return CategoryFactory.makeCategoryResponse(categoryDtoList);
+        CollectionModel<CategoryDto> model = makeCategoriesModel(categoryDtoList);
+        return ResponseEntity.ok(model);
     }
 
-    @GetMapping("/v2/categories")
-    public ResponseEntity<?> getCategoryResponseV2(){
-        List<CategoryDto> categoryDtoList = categoryRepository.findCategoryDtoList();
-        CollectionModel<CategoryDto> categoryModels = CategoryResponseModel
-                .of(categoryDtoList, linkTo(methodOn(CategoryApiController.class).getCategoryResponseV2()).withSelfRel());
-        // TODO: CategoryDto profile문서 링크 추가
-        return ResponseEntity.ok(categoryModels);
+    private CollectionModel<CategoryDto> makeCategoriesModel(List<CategoryDto> categoryDtoList) {
+        CollectionModel<CategoryDto> model = CollectionModel.of(categoryDtoList, linkTo(CategoryApiController.class).withSelfRel());
+        model.add(Link.of("/api/v1/displayinfos?categoryId=1").withRel("exhibition-products"));
+        model.add(Link.of("/api/v1/displayinfos?categoryId=2").withRel("musical-products"));
+        model.add(Link.of("/api/v1/displayinfos?categoryId=3").withRel("concert-products"));
+        model.add(Link.of("/api/v1/displayinfos?categoryId=4").withRel("classic-products"));
+        model.add(Link.of("/api/v1/displayinfos?categoryId=5").withRel("play-products"));
+        model.add(Link.of("/docs/index.html#resources-category-list").withRel("profile"));
+        return model;
     }
 
 }

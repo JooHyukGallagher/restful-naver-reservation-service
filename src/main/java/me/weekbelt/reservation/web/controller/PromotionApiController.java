@@ -2,10 +2,9 @@ package me.weekbelt.reservation.web.controller;
 
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.reservation.domain.promotion.PromotionRepository;
-import me.weekbelt.reservation.factory.promotion.PromotionFactory;
 import me.weekbelt.reservation.web.form.promotion.PromotionDto;
-import me.weekbelt.reservation.web.form.promotion.PromotionResponse;
 import org.springframework.hateoas.CollectionModel;
+import org.springframework.hateoas.Link;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -31,6 +30,7 @@ public class PromotionApiController {
 
         CollectionModel<PromotionDto> promotionModel = CollectionModel
                 .of(promotions, linkTo(methodOn(PromotionApiController.class).promotionsV2()).withSelfRel());
+        promotionModel.add(Link.of("/docs/index.html#resources-promotion-list").withRel("profile"));
         return ResponseEntity.ok(promotionModel);
     }
 }

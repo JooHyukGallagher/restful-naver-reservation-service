@@ -5,6 +5,7 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.reservation.domain.ImageType;
 import me.weekbelt.reservation.domain.category.QCategory;
+import me.weekbelt.reservation.domain.displayInfo.QDisplayInfo;
 import me.weekbelt.reservation.domain.fileInfo.QFileInfo;
 import me.weekbelt.reservation.domain.product.QProduct;
 import me.weekbelt.reservation.domain.productImage.QProductImage;
@@ -14,6 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 
 import static me.weekbelt.reservation.domain.category.QCategory.category;
+import static me.weekbelt.reservation.domain.displayInfo.QDisplayInfo.displayInfo;
 import static me.weekbelt.reservation.domain.fileInfo.QFileInfo.fileInfo;
 import static me.weekbelt.reservation.domain.product.QProduct.*;
 import static me.weekbelt.reservation.domain.productImage.QProductImage.productImage;
@@ -31,14 +33,17 @@ public class PromotionRepositoryCustomImpl implements PromotionRepositoryCustom{
                 .select(Projections.fields(PromotionDto.class,
                         promotion.id,
                         promotion.product.id.as("productId"),
+                        displayInfo.id.as("displayInfoId"),
                         promotion.product.category.id.as("categoryId"),
                         promotion.product.category.name.as("categoryName"),
                         promotion.product.description.as("description"),
                         fileInfo.id.as("fileId")))
                 .from(promotion)
                 .join(product).on(product.id.eq(promotion.product.id)).fetchJoin()
+                .join(displayInfo).on(displayInfo.product.id.eq(product.id)).fetchJoin()
+                .join(category).on(category.id.eq(product.category.id))
                 .leftJoin(productImage).on(productImage.product.id.eq(product.id)).fetchJoin()
-                .join(fileInfo).on(fileInfo.id.eq(productImage.fileInfo.id)).fetchJoin()
+                .leftJoin(fileInfo).on(fileInfo.id.eq(productImage.fileInfo.id)).fetchJoin()
                 .where(productImage.type.eq(ImageType.th))
                 .fetch();
     }

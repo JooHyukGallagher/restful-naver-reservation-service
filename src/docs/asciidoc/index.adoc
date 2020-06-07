@@ -1,5 +1,5 @@
-= Natural REST API Guide
-백기선;
+= 네이버 예약 서비스 REST API Guide
+weekbelt;
 :doctype: book
 :icons: font
 :source-highlighter: highlightjs

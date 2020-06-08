@@ -129,6 +129,14 @@ operation::product-list[snippets='curl-request,request-parameters,http-response,
 
 operation::product-displayinfo[snippets='curl-request,http-request,http-response,response-fields,links']
 
+[[resources-comment-list]]
+=== 상품 평 리스트 조회
+
+`Get` 요청을 사용해서 상품 평 리스트를 조회할 수 있다.
+
+operation::comment-list[snippets='curl-request,http-request,http-response,response-fields,links']
+
+
 [[resources-events-update]]
 === 이벤트 수정
 

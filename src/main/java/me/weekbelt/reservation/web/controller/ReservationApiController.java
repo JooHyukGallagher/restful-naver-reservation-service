@@ -9,14 +9,13 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.data.web.PagedResourcesAssembler;
 import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
 import org.springframework.hateoas.PagedModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
-import static org.springframework.hateoas.server.mvc.WebMvcLinkBuilder.linkTo;
 
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -33,9 +32,8 @@ public class ReservationApiController {
                 .findReservationUserCommentDtoList(productId, pageable);
 
         PagedModel<EntityModel<ReservationUserCommentDto>> pageModels = assembler.toModel(reservationUserComments,
-                reservationUserComment -> ReservationUserCommentResponseModel.of(reservationUserComment,
-                linkTo(ReservationApiController.class).slash(reservationUserComment.getId()).withSelfRel()));
-
+                reservationUserComment -> ReservationUserCommentResponseModel.of(reservationUserComment));
+        pageModels.add(Link.of("/docs/index.html#resources-comment-list").withRel("profile"));
         return ResponseEntity.ok(pageModels);
     }
 }

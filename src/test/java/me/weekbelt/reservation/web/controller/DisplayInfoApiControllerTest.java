@@ -94,9 +94,9 @@ class DisplayInfoApiControllerTest extends BasicControllerTest {
                                 fieldWithPath("_links.self.href").description("현재 상품 상세정보 링크"),
                                 fieldWithPath("_links.product-list.href").description("상품 목록 페이지 링크"),
                                 fieldWithPath("_links.profile.href").description("상품 조회 API 문서 링크"))
-                                .andWithPrefix("productImages[]", productImages)
-                                .andWithPrefix("displayInfoImages[]", displayInfoImages)
-                                .andWithPrefix("productPrices[]", productPrices)
+                                .andWithPrefix("productImages[].", productImages)
+                                .andWithPrefix("displayInfoImages[].", displayInfoImages)
+                                .andWithPrefix("productPrices[].", productPrices)
                 ));
     }
 }

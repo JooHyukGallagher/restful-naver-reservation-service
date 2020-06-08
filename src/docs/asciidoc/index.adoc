@@ -122,12 +122,12 @@ operation::promotion-list[snippets='curl-request,http-request,http-response,resp
 operation::product-list[snippets='curl-request,request-parameters,http-response,response-fields,links']
 
 
-[[resources-events-get]]
-=== 이벤트 조회
+[[resources-product-get]]
+=== 상품 조회
 
-`Get` 요청을 사용해서 기존 이벤트 하나를 조회할 수 있다.
+`Get` 요청을 사용해서 기존 상품 하나를 조회할 수 있다.
 
-operation::get-event[snippets='request-fields,curl-request,http-response,links']
+operation::product-displayinfo[snippets='curl-request,http-request,http-response,response-fields,links']
 
 [[resources-events-update]]
 === 이벤트 수정

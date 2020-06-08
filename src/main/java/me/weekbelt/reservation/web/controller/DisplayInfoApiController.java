@@ -49,11 +49,15 @@ public class DisplayInfoApiController {
         List<ProductImageDto> productImages = productImageService.findProductImageDtoList(product.getId());
         List<DisplayInfoImageDto> displayInfoImages = displayInfoImageService.findDisplayInfoImageDtoByDisplayInfoId(displayInfoId);
         Double avgScore = reservationUserCommentRepository.commentAverageScoreByProductId(product.getId());
+        if (avgScore == null){
+            avgScore = 0.0;
+        }
         List<ProductPriceDto> productPrices = productPriceService.findProductPriceDtoListByProductId(product.getId());
 
         DisplayInfoResponseModel displayInfoResponseModel = DisplayInfoFactory.makeDisplayInfoResponseModel(product, productImages, displayInfoImages, avgScore, productPrices);
         displayInfoResponseModel.add(linkTo(methodOn(DisplayInfoApiController.class).displayInfoV2(displayInfoId)).withSelfRel());
         displayInfoResponseModel.add(Link.of("/api/v1/displayinfos").withRel("product-list"));
+        displayInfoResponseModel.add(Link.of("/docs/index.html#resources-product-get").withRel("profile"));
         return displayInfoResponseModel;
     }
 

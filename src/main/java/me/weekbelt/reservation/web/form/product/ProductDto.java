@@ -2,6 +2,7 @@ package me.weekbelt.reservation.web.form.product;
 
 import lombok.Builder;
 import lombok.Getter;
+import org.springframework.hateoas.RepresentationModel;
 
 import java.time.LocalDateTime;
 

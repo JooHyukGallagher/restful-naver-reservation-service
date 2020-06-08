@@ -34,7 +34,7 @@ public class DisplayInfoFactory {
                 .build();
     }
 
-    public static DisplayInfoResponseModel makeDisplayInfoResponseModel(EntityModel<ProductDto> product, List<ProductImageDto> productImages,
+    public static DisplayInfoResponseModel makeDisplayInfoResponseModel(ProductDto product, List<ProductImageDto> productImages,
                                                                         List<DisplayInfoImageDto> displayInfoImages,
                                                                         Double avgScore, List<ProductPriceDto> productPrices) {
         return DisplayInfoResponseModel.builder()

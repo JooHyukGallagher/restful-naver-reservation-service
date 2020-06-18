@@ -28,7 +28,7 @@ public class CategoryRepositoryCustomImpl implements CategoryRepositoryCustom {
                 .from(category)
                 .join(product).on(category.id.eq(product.category.id))
                 .join(displayInfo).on(product.id.eq(displayInfo.product.id))
-                .groupBy(category.name)
+                .groupBy(category.id, category.name)
                 .orderBy(category.id.asc())
                 .fetch();
     }

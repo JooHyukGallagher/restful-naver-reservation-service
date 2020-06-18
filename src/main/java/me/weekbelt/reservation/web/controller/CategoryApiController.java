@@ -3,6 +3,7 @@ package me.weekbelt.reservation.web.controller;
 import lombok.RequiredArgsConstructor;
 import me.weekbelt.reservation.domain.category.CategoryRepository;
 import me.weekbelt.reservation.web.form.category.CategoryDto;
+import me.weekbelt.reservation.web.form.category.CategoryResponse;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.hateoas.CollectionModel;
 import org.springframework.hateoas.Link;
@@ -29,19 +30,23 @@ public class CategoryApiController {
     @GetMapping("/v1/categories")
     public ResponseEntity<?> getCategoryResponseV1() {
         List<CategoryDto> categoryDtoList = categoryRepository.findCategoryDtoList();
-        CollectionModel<CategoryDto> model = makeCategoriesModel(categoryDtoList);
-        return ResponseEntity.ok(model);
+        CategoryResponse categoryResponse = makeCategoryResponseModel(categoryDtoList);
+        return ResponseEntity.ok(categoryResponse);
     }
 
-    private CollectionModel<CategoryDto> makeCategoriesModel(List<CategoryDto> categoryDtoList) {
-        CollectionModel<CategoryDto> model = CollectionModel.of(categoryDtoList, linkTo(methodOn(CategoryApiController.class).getCategoryResponseV1()).withSelfRel());
-        model.add(Link.of(requestBaseUri + "/api/v1/displayinfos?categoryId=1").withRel("exhibition-products"));
-        model.add(Link.of(requestBaseUri + "/api/v1/displayinfos?categoryId=2").withRel("musical-products"));
-        model.add(Link.of(requestBaseUri + "/api/v1/displayinfos?categoryId=3").withRel("concert-products"));
-        model.add(Link.of(requestBaseUri + "/api/v1/displayinfos?categoryId=4").withRel("classic-products"));
-        model.add(Link.of(requestBaseUri + "/api/v1/displayinfos?categoryId=5").withRel("play-products"));
-        model.add(Link.of(requestBaseUri + "/docs/index.html#resources-category-list").withRel("profile"));
-        return model;
+    private CategoryResponse makeCategoryResponseModel(List<CategoryDto> categoryDtoList) {
+        CategoryResponse categoryResponse = CategoryResponse.builder()
+                .items(categoryDtoList)
+                .size(categoryDtoList.size())
+                .build();
+        categoryResponse.add(linkTo(methodOn(CategoryApiController.class).getCategoryResponseV1()).withSelfRel());
+        categoryResponse.add(Link.of(requestBaseUri + "/api/v1/displayinfos?categoryId=1").withRel("exhibition-products"));
+        categoryResponse.add(Link.of(requestBaseUri + "/api/v1/displayinfos?categoryId=2").withRel("musical-products"));
+        categoryResponse.add(Link.of(requestBaseUri + "/api/v1/displayinfos?categoryId=3").withRel("concert-products"));
+        categoryResponse.add(Link.of(requestBaseUri + "/api/v1/displayinfos?categoryId=4").withRel("classic-products"));
+        categoryResponse.add(Link.of(requestBaseUri + "/api/v1/displayinfos?categoryId=5").withRel("play-products"));
+        categoryResponse.add(Link.of(requestBaseUri + "/docs/index.html#resources-category-list").withRel("profile"));
+        return categoryResponse;
     }
 
 }

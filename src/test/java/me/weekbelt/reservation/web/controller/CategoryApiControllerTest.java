@@ -51,7 +51,8 @@ class CategoryApiControllerTest extends BasicControllerTest {
                                 headerWithName(HttpHeaders.CONTENT_TYPE).description("Content-Type 헤더")
                         ),
                         responseFields(
-                                fieldWithPath("_embedded.categoryDtoList").description("카테고리 목록"),
+                                fieldWithPath("size").description("카테고리 종류 개수"),
+                                fieldWithPath("items").description("카테고리 목록"),
                                 fieldWithPath("_links.self.href").description("현재 링크"),
                                 fieldWithPath("_links.exhibition-products.href").description("전시 상품 목록"),
                                 fieldWithPath("_links.musical-products.href").description("뮤지컬 상품 목록"),
@@ -59,6 +60,6 @@ class CategoryApiControllerTest extends BasicControllerTest {
                                 fieldWithPath("_links.classic-products.href").description("클래식 상품 목록"),
                                 fieldWithPath("_links.play-products.href").description("연극 상품 목록"),
                                 fieldWithPath("_links.profile.href").description("카테고리 목록 API 문서 링크")
-                        ).andWithPrefix("_embedded.categoryDtoList[]", categoryList)));
+                        ).andWithPrefix("items[].", categoryList)));
     }
 }
